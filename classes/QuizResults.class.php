@@ -156,7 +156,7 @@ class QuizResults
         {
             // added xml file
             $dateTime = date('Y-m-d_H-i-s');
-            if (!file_put_contents("./xml/quiz_result_{$dateTime}.xml", $detailResultXml)) {
+            if (!file_put_contents("./../xml/quiz_result_{$dateTime}.xml", $detailResultXml)) {
                 throw new \Exception("Не удалось сохранить xml файл");
             }
             // added xml file
