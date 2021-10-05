@@ -28,6 +28,13 @@
         $resultFilename = dirname(__FILE__) . "/../../QuizResults/result/quiz_result_{$dateTime}.txt";
         @file_put_contents($resultFilename, $report);
 
+        // added xml file
+        $detailResultXml = $quizResults->GetDetailResultXml($requestParameters);
+        if (!file_put_contents("./../../QuizResults/xml/quiz_result_{$dateTime}.xml", $detailResultXml)) {
+            throw new \Exception("Не удалось сохранить xml файл");
+        }
+        // added xml file
+
         echo "OK";
     }
     catch (Exception $e)
