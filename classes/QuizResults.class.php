@@ -154,13 +154,6 @@ class QuizResults
         $detailResultXml = $requestParams["dr"];
         if ($detailResultXml)
         {
-            // added xml file
-            $dateTime = date('Y-m-d_H-i-s');
-            if (!file_put_contents("./../xml/quiz_result_{$dateTime}.xml", $detailResultXml)) {
-                throw new \Exception("Не удалось сохранить xml файл");
-            }
-            // added xml file
-
             $quizDetails = new QuizDetails();
             $xsdFileName = $this->GetSchemaByVersion($this->version);
             $validateSuccessfully = $quizDetails->loadFromXml($detailResultXml, $xsdFileName, $this->version);
@@ -169,6 +162,16 @@ class QuizResults
                 $this->detailResult = $quizDetails;
             }
         }
+    }
+
+    public function GetDetailResultXml($requestParams)
+    {
+        if ( empty( $requestParams["dr"] ) )
+        {
+            return null;
+        }
+
+        return $requestParams["dr"];
     }
 
     private function CheckInvalidVariables()

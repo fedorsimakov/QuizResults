@@ -25,8 +25,16 @@
         $report = $generator->createReport();
 
         $dateTime = date('Y-m-d_H-i-s');
+
         $resultFilename = dirname(__FILE__) . "/../result/quiz_result_{$dateTime}.txt";
         @file_put_contents($resultFilename, $report);
+
+        // added xml file
+        $detailResultXml = $quizResults->GetDetailResultXml($requestParameters);
+        if (!file_put_contents("./../xml/quiz_result_{$dateTime}.xml", $detailResultXml)) {
+            throw new \Exception("Не удалось сохранить xml файл");
+        }
+        // added xml file
 
         echo "OK";
     }
