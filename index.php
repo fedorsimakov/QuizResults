@@ -12,7 +12,7 @@
     ini_set('display_errors', 0);
     ini_set('log_errors', 1);
 
-    require_once './../../QuizResults/includes/common.inc.php';
+    require_once './includes/common.inc.php';
 
     $requestParameters = RequestParametersParser::getRequestParameters($_POST, !empty($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : null);
     _log($requestParameters);
@@ -25,12 +25,12 @@
         $report = $generator->createReport();
 
         $dateTime = date('Y-m-d_H-i-s');
-        $resultFilename = dirname(__FILE__) . "/../../QuizResults/result/quiz_result_{$dateTime}.txt";
+        $resultFilename = dirname(__FILE__) . "/result/quiz_result_{$dateTime}.txt";
         @file_put_contents($resultFilename, $report);
 
         // added xml file
         $detailResultXml = $quizResults->GetDetailResultXml($requestParameters);
-        if (!file_put_contents("./../../QuizResults/xml/quiz_result_{$dateTime}.xml", $detailResultXml)) {
+        if (!file_put_contents("./xml/quiz_result_{$dateTime}.xml", $detailResultXml)) {
             throw new \Exception("Не удалось сохранить xml файл");
         }
         // added xml file
@@ -46,7 +46,7 @@
 
     function _log($requestParameters)
     {
-        $logFilename = dirname(__FILE__) . '/../../QuizResults/log/quiz_results.log';
+        $logFilename = dirname(__FILE__) . '/log/quiz_results.log';
         $event       = array('ts' => date('Y-m-d H:i:s'), 'request_parameters' => $requestParameters, 'ts_' => time());
         $logMessage  = json_encode($event);
         $logMessage .= ',' . PHP_EOL;
